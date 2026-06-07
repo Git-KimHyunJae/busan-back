@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "PowerShell(Get-ChildItem -Recurse \"D:\\\\source\\\\lofi\" | Where-Object { !$_.PSIsContainer } | Select-Object FullName)",
+      "PowerShell(Set-Location D:\\\\source\\\\lofi; $env:Path += \";D:\\\\flutter\\\\bin\"; flutter run 2>&1)"
+    ]
+  }
+}

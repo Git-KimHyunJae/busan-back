@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: safe
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 1
+    driver-class-name: org.postgresql.Driver
+mybatis:
+  #XML 매퍼 파일 위치(resources/mapper 폴더 하위 모든 xml 파일)
+  mapper-locations: classpath:LocationMapper/**/*.xml
+  #DTO 클래스 패키지 경로(XML에서 클래스명만으로 사용가능)
+  type-aliases-package: com.busansafe.safe.dto
+  configuration:
+    # DB 컬럼명 언더스코어(user_name) → 자바 카멜케이스(userName) 자동 변환
+    map-underscore-to-camel-case: true
+    # 콘솔에 실행되는 SQL 출력 (개발 시 확인용, 운영 시 제거 권장)
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #SQL 실행 제한 시간(초). 지정 시간 초과 시 예외 발생
+    default-statement-timeout: 60
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
