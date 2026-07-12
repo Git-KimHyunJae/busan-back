@@ -14,6 +14,7 @@ public class GetLocationService {
     private final GetLocationDao getLocationDao;
 
     public List<GetLocationDto> GetLocation(GetLocationDto locationDto){
+        System.out.println("service >>>>>>>>>>>>>");
         return getLocationDao.GetLocation(locationDto);
     }
 

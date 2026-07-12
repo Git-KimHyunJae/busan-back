@@ -4,8 +4,23 @@
 
 <mapper namespace="com.busansafe.safe.Dao.GetLocationDao">
 
-    <select id="GetLocation" parameterType="com.busansafe.safe.Dto.GetLocationDto">
-
+    <select id="GetLocation" parameterType="com.busansafe.safe.Dto.GetLocationDto"
+            resultType="com.busansafe.safe.Dto.GetLocationDto">
+        SELECT
+        address,
+        latitude,
+        longitude,
+        ST_Distance(
+        coordinate,
+        ST_SetSRID(ST_MakePoint(#{longitude}, #{latitude}), 4326)::geography --경도,위도 순서
+        ) AS distance_m
+        FROM TB_CCTV_INFO
+        WHERE ST_DWithin(
+        coordinate,
+        ST_SetSRID(ST_MakePoint(#{longitude}, #{latitude}), 4326)::geography,
+        100
+        )
+        ORDER BY distance_m;
     </select>
 
 </mapper>
