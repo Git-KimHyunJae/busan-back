@@ -6,21 +6,39 @@
 
     <select id="GetLocation" parameterType="com.busansafe.safe.Dto.GetLocationDto"
             resultType="com.busansafe.safe.Dto.GetLocationDto">
-        SELECT
-        address,
-        latitude,
-        longitude,
-        ST_Distance(
-        coordinate,
-        ST_SetSRID(ST_MakePoint(#{longitude}, #{latitude}), 4326)::geography --경도,위도 순서
-        ) AS distance_m
-        FROM TB_CCTV_INFO
-        WHERE ST_DWithin(
-        coordinate,
-        ST_SetSRID(ST_MakePoint(#{longitude}, #{latitude}), 4326)::geography,
-        100
-        )
-        ORDER BY distance_m;
+        select
+        address
+        ,latitude
+        ,longitude
+        ,st_distance(coordinate,st_setsrid(st_makepoint(#{longitude}, #{latitude}), 4326)::geography) as distance_m  --경도,위도 순서
+        ,'cctv' as gubun
+        from tb_cctv_info
+        where st_dwithin(coordinate,st_setsrid(st_makepoint(#{longitude}, #{latitude}), 4326)::geography,100)
+        union all
+        select address
+        ,latitude
+        ,longitude
+        ,st_distance(coordinate,st_setsrid(st_makepoint(#{longitude}, #{latitude}), 4326)::geography) as distance_m  --경도,위도 순서
+        ,'fire' as gubun
+        from tb_firemap_info
+        where st_dwithin(coordinate,st_setsrid(st_makepoint(#{longitude}, #{latitude}), 4326)::geography,100)
+        union all
+        select address
+        ,latitude
+        ,longitude
+        ,st_distance(coordinate,st_setsrid(st_makepoint(#{longitude}, #{latitude}), 4326)::geography) as distance_m  --경도,위도 순서
+        ,'police' as gubun
+        from tb_police_info
+        where st_dwithin(coordinate,st_setsrid(st_makepoint(#{longitude}, #{latitude}), 4326)::geography,100)
+        union all
+        select
+        address
+        ,latitude
+        ,longitude
+        ,st_distance(coordinate,st_setsrid(st_makepoint(#{longitude}, #{latitude}), 4326)::geography) as distance_m  --경도,위도 순서
+        ,'safe_bell' as gubun
+        from tb_safe_bell
+        where st_dwithin(coordinate,st_setsrid(st_makepoint(#{longitude}, #{latitude}), 4326)::geography,100)
     </select>
 
 </mapper>

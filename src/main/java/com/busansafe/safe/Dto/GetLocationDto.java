@@ -7,4 +7,5 @@ public class GetLocationDto {
     double latitude;
     double longitude;
     String address;
+    String gubun;
 }
